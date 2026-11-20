@@ -34,6 +34,9 @@ function appendDestination(container, entry, className = 'text-link') {
 
 function init(data) {
   const entries = data.entries;
+  const sources = new Map(data.sources.map((source) => [source.id, source]));
+  const research = entries.find((entry) => entry.id === 'research-disciplines');
+  const researchFields = new Set(research.relations.filter((edge) => edge.kind === 'contains').map((edge) => edge.target));
   const byId = new Map(entries.map((entry) => [entry.id, entry]));
   let activeType = 'All';
   let query = '';
@@ -50,14 +53,10 @@ function init(data) {
   const typeSelect = document.querySelector('#directory-type');
   const clerkResponse = document.querySelector('#clerk-response');
   const clerkLink = document.querySelector('#clerk-link');
-  const mapLines = document.querySelector('#map-lines');
-  const mapNodes = document.querySelector('#map-nodes');
-  const mapType = document.querySelector('#map-detail-type');
+  const mapPicker = document.querySelector('#map-entry');
   const mapTitle = document.querySelector('#map-detail-title');
-  const mapDescription = document.querySelector('#map-detail-description');
-  const mapFacts = document.querySelector('#map-detail-facts');
-  const mapLink = document.querySelector('#map-detail-link');
-  const mapConcept = document.querySelector('#map-detail-concept');
+  const mapRelations = document.querySelector('#map-relations');
+  const mapSources = document.querySelector('#map-sources');
 
   function setView(view, { focus = false, updateHash = false } = {}) {
     for (const tab of tabs) {
@@ -67,7 +66,7 @@ function init(data) {
       if (selected && focus) tab.focus();
     }
     for (const [name, panel] of Object.entries(panels)) panel.hidden = name !== view;
-    if (updateHash) history.replaceState(null, '', view === 'map' ? '#map' : '#directory');
+    if (updateHash && location.hash !== '#' + view) history.pushState(null, '', '#' + view);
   }
 
   tabs.forEach((tab, index) => {
@@ -89,38 +88,60 @@ function init(data) {
   });
 
   for (const type of [...new Set(entries.map((entry) => entry.type))].sort()) {
-    typeSelect.append(new Option(type === 'Canon' ? 'Canon & books' : type, type));
+    typeSelect.append(new Option(({ Canon: 'Canon & books', Discipline: 'Research fields' })[type] || type, type));
   }
 
-  function sourceLabels(entry) {
-    return entry.sourceIds.map((id) => data.sources.find((source) => source.id === id)?.label).filter(Boolean);
+  function sourceLink(id) {
+    const source = sources.get(id);
+    const link = make('a', 'text-link', source.label);
+    link.href = safePublicURL(source.url);
+    return link;
   }
 
   function selectEntry(entry) {
-    mapType.textContent = entry.map.region === entry.type ? entry.type : `${entry.type} · ${entry.map.region}`;
+    mapPicker.value = entry.id;
+    document.querySelector('#map-detail-type').textContent = entry.type;
     mapTitle.textContent = entry.title;
-    mapDescription.textContent = entry.detail;
-    mapFacts.replaceChildren();
-    for (const [term, value] of [['Maturity', entry.maturity], ['Availability', entry.availability], ['Grounding', sourceLabels(entry).join(' · ')]]) {
-      mapFacts.append(make('dt', '', term), make('dd', '', value));
+    document.querySelector('#map-detail-description').textContent = entry.detail;
+    const facts = document.querySelector('#map-detail-facts');
+    facts.replaceChildren();
+    for (const [label, value] of [['Maturity', entry.maturity], ['Availability', entry.availability]]) {
+      facts.append(make('dt', '', label), make('dd', '', value));
     }
-    mapLink.hidden = true;
-    mapLink.removeAttribute('href');
-    mapConcept.hidden = true;
-    const url = entry.destination.kind === 'link' && safePublicURL(entry.destination.url);
-    if (url) {
-      mapLink.href = url;
-      mapLink.textContent = entry.destination.label;
-      mapLink.hidden = false;
-    } else {
-      mapConcept.textContent = entry.destination.label;
-      mapConcept.hidden = false;
+    const destination = document.querySelector('#map-destination');
+    destination.replaceChildren();
+    appendDestination(destination, entry);
+    mapSources.replaceChildren();
+    for (const id of entry.sourceIds) {
+      const item = make('li');
+      item.append(sourceLink(id));
+      mapSources.append(item);
     }
-    mapNodes.querySelectorAll('.map-node').forEach((node) => node.classList.toggle('selected', node.dataset.id === entry.id));
+    mapRelations.replaceChildren();
+    for (const owner of entries) {
+      for (const relation of owner.relations) {
+        if (owner !== entry && relation.target !== entry.id) continue;
+        const outgoing = owner === entry;
+        const neighbor = outgoing ? byId.get(relation.target) : owner;
+        const label = relation.kind === 'contains'
+          ? (outgoing ? 'Research field' : 'Field within')
+          : (outgoing ? 'Listed in profile' : 'Listed by');
+        const item = make('li');
+        const button = make('button', 'map-neighbor', neighbor.title);
+        button.type = 'button';
+        button.addEventListener('click', () => {
+          selectEntry(neighbor);
+          mapTitle.focus();
+        });
+        item.append(make('span', 'edge-label', label), button, sourceLink(relation.sourceId));
+        mapRelations.append(item);
+      }
+    }
+    if (!mapRelations.childElementCount) mapRelations.append(make('li', '', 'No connection is documented here.'));
   }
 
   function directTo(entry) {
-    clerkResponse.textContent = `${entry.title}. ${entry.summary} ${entry.destination.label}.`;
+    clerkResponse.textContent = `${entry.title}. ${entry.detail}`;
     const url = entry.destination.kind === 'link' && safePublicURL(entry.destination.url);
     clerkLink.hidden = !url;
     if (url) {
@@ -129,14 +150,16 @@ function init(data) {
     } else {
       clerkLink.removeAttribute('href');
     }
+    clerkResponse.focus({ preventScroll: true });
     document.querySelector('#front-desk').scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'start' });
   }
 
   function renderDirectory() {
     const term = query.trim().toLocaleLowerCase();
     const visible = entries.filter((entry) => {
-      const fields = [entry.title, entry.type, entry.maturity, entry.availability, entry.summary, entry.detail, entry.map.region];
-      return (activeType === 'All' || entry.type === activeType) && fields.some((field) => field.toLocaleLowerCase().includes(term));
+      const fields = [entry.title, entry.type, entry.maturity, entry.availability, entry.summary, entry.detail];
+      const matchesResearch = activeType === 'Discipline' && researchFields.has(entry.id);
+      return (activeType === 'All' || entry.type === activeType || matchesResearch) && fields.some((field) => field.toLocaleLowerCase().includes(term));
     });
     cards.replaceChildren();
     for (const entry of visible) {
@@ -146,7 +169,7 @@ function init(data) {
       const title = make('h3', '', entry.title);
       const summary = make('p', 'card-summary', entry.summary);
       const facts = make('dl', 'card-facts');
-      facts.append(make('dt', '', 'Maturity'), make('dd', '', entry.maturity), make('dt', '', 'Destination'), make('dd', '', entry.destination.kind === 'link' ? 'Accessible link' : 'Conceptual only'));
+      facts.append(make('dt', '', 'Maturity'), make('dd', '', entry.maturity));
       const actions = make('div', 'card-actions');
       appendDestination(actions, entry);
       const ask = make('button', '', 'Ask the Clerk');
@@ -156,37 +179,12 @@ function init(data) {
       article.append(head, title, summary, facts, actions);
       cards.append(article);
     }
-    count.textContent = `${visible.length} of ${entries.length} public orientations`;
+    count.textContent = `${visible.length} of ${entries.length} entries`;
     empty.hidden = visible.length !== 0;
   }
 
-  for (const entry of entries) {
-    const button = make('button', 'map-node');
-    button.type = 'button';
-    button.dataset.id = entry.id;
-    button.style.left = `${entry.map.x}%`;
-    button.style.top = `${entry.map.y}%`;
-    button.append(make('small', '', entry.type), make('span', '', entry.title));
-    button.addEventListener('click', () => selectEntry(entry));
-    mapNodes.append(button);
-  }
-
-  const edges = new Set();
-  for (const entry of entries) {
-    for (const relation of entry.relations) {
-      const target = byId.get(relation.target);
-      if (!target) continue;
-      const key = [entry.id, target.id].sort().join(':');
-      if (edges.has(key)) continue;
-      edges.add(key);
-      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-      line.setAttribute('x1', String(entry.map.x * 10));
-      line.setAttribute('y1', String(entry.map.y * 6.2));
-      line.setAttribute('x2', String(target.map.x * 10));
-      line.setAttribute('y2', String(target.map.y * 6.2));
-      mapLines.append(line);
-    }
-  }
+  for (const entry of entries) mapPicker.append(new Option(entry.title, entry.id));
+  mapPicker.addEventListener('change', () => selectEntry(byId.get(mapPicker.value)));
 
   document.querySelectorAll('[data-route]').forEach((button) => {
     button.addEventListener('click', () => {
@@ -196,9 +194,9 @@ function init(data) {
       search.value = '';
       setView('directory', { updateHash: true });
       renderDirectory();
-      const first = entries.find((entry) => entry.type === activeType);
-      clerkResponse.textContent = first ? `I have opened the ${button.textContent} perspective. The directory distinguishes public links from conceptual destinations and shows maturity and availability for each entry.` : 'That perspective is not currently available.';
+      clerkResponse.textContent = `I’ve opened ${button.textContent} in the directory.`;
       clerkLink.hidden = true;
+      search.focus({ preventScroll: true });
       document.querySelector('#navigator').scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'start' });
     });
   });
@@ -208,7 +206,15 @@ function init(data) {
 
   renderDirectory();
   selectEntry(entries[0]);
-  if (location.hash === '#map') setView('map');
+  function followHash() {
+    const mapRequested = ['#map', '#institutional-map'].includes(location.hash);
+    setView(mapRequested ? 'map' : 'directory');
+    if (mapRequested || location.hash === '#directory') {
+      document.querySelector(mapRequested ? '#map' : '#directory').scrollIntoView({ block: 'start' });
+    }
+  }
+  window.addEventListener('hashchange', followHash);
+  followHash();
 }
 
 fetch(DIRECTORY_URL)

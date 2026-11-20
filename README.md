@@ -1,67 +1,25 @@
-# Ascendancy Systems — Front Desk
+# Ascendancy Systems · Front Desk
 
-**Stage 1 · v0.2** — compact public reception, grounded directory, and institutional navigation map.
+[Visit the Front Desk](https://ascendancy-systems.github.io/front-desk/) · [Directory](https://ascendancy-systems.github.io/front-desk/#directory) · [Map](https://ascendancy-systems.github.io/front-desk/#map)
 
-The Front Desk is a static, dependency-free public entrance for Ascendancy Systems. Its recognizable Clerk offers guided directions, while the Directory and Map remain independently navigable. All three views read the single approved `data/directory.json` source. There is no live AI backend, account system, private corpus, or runtime service.
+The Front Desk is the public entrance to Ascendancy Systems. Ask the Clerk for a direction, search by name or subject, or follow a documented connection on the map. Stage 1 uses a scripted guide and a static directory.
 
-## Public site
+## What visitors can find
 
-The repository is `Ascendancy-Systems/front-desk` and its GitHub Pages project address is:
+The directory covers the institution and its constitution, the six-book series, research and disciplines, systems and instruments, Continuum, and symbolic environments including Cathedral. Each entry gives its maturity and availability. A destination opens a public resource where one is linked. Conceptual entries offer a description and a source for their inclusion.
 
-<https://ascendancy-systems.github.io/front-desk/>
+The [organization profile](https://github.com/Ascendancy-Systems/.github/blob/main/profile/README.md) introduces the research program. The [MG-001 record](https://github.com/Ascendancy-Systems/.github/blob/main/profile/META-GAUGE.md) carries the assessment. The [GMG-A demonstrator](https://ascendancy-systems.github.io/meta-gauge/) provides the experimental spatial view. The [v0.2 review](https://github.com/Ascendancy-Systems/front-desk/pull/1) records the scope of the conceptual entries.
 
-The former repository name redirects on GitHub, but GitHub Pages project URLs are path-based and the former Pages URL should not be treated as a supported redirect. Links should use `/front-desk/`.
+## Maintaining the directory
 
-The `ascendancy.systems` name is reserved for a future full institutional website. This repository does not configure a `CNAME`, alter DNS, or claim a custom-domain deployment.
+Edit [`data/directory.json`](./data/directory.json). The Clerk, Directory, and Map read this file. Give each entry a stable ID, type, maturity, availability, description, source IDs, and destination. A public destination has an HTTPS URL. A conceptual destination has a label only.
 
-## What v0.2 changes
+Record each documented connection once, on its originating entry, with a target, relation kind, and source ID. The map derives the return route from that same record. The research overview’s membership also determines which entries its Clerk route includes.
 
-- Compresses the oversized landing, reception, directory, and map into one cohesive reception-and-navigation workspace.
-- Keeps the Clerk visible and recognizable without making conversation a prerequisite.
-- Adds explicit perspectives for institution and constitution, the canonical six-book series, research and disciplines, systems and instruments, Continuum and knowledge infrastructure, and symbolic or experiential environments including Cathedral.
-- Preserves the six publicly described research groupings without presenting them as a finalized taxonomy.
-- Extends the single-source directory schema with `type`, `maturity`, `availability`, `destination`, `sourceIds`, and declared `relations`.
-- Distinguishes a verified public link from a conceptual destination that has no public edition or endpoint.
-- Limits references to public organizational records and an approved high-level orientation; it does not publish manuscript titles, contents, private archives, or an invented canonical ontology.
+## Preview and publish
 
-## Local preview and validation
+Run `npm test` to check the data and navigation structure. Run `python -m http.server 8000` from this directory to preview the site at `http://localhost:8000/`. The runtime uses browser-native modules and has no package dependencies.
 
-With Python 3 installed, run:
+GitHub Pages publishes the static files from `main` to `/front-desk/`. Link to that project path. GitHub’s repository rename redirect applies to repository URLs. The former project-site path has no supported redirect. The name `ascendancy.systems` is reserved for the eventual institutional website.
 
-```sh
-python -m http.server 8000
-```
-
-Open `http://localhost:8000/`. The page must be served over HTTP so its module can load `data/directory.json`.
-
-Run all integrity checks with:
-
-```sh
-npm test
-```
-
-The validator checks source IDs, allowed public hosts, type and maturity values, availability, link-versus-concept boundaries, map coordinates, relation targets, and the six approved perspectives. The test suite also checks the accessible Directory/Map tabs, the static Clerk disclosure, the renamed repository references, and the Pages path.
-
-## Source and publication boundaries
-
-- The public organization profile grounds the institution, stewardship, research fields, development status, and public/private distinction.
-- The MG-001 record and Meta-Gauge repository ground the instrument entry.
-- The approved v0.2 orientation permits limited naming of the six-book series, Continuum, and Cathedral. Their entries deliberately expose no unpublished titles, contents, private implementation, or fabricated public links.
-- Map relations are declared navigation statements in the directory. Their screen positions do not define a canonical ontology or theoretical dependency.
-
-## Project files
-
-| Path | Role |
-|---|---|
-| `index.html` | Compact reception and hybrid navigator |
-| `assets/styles.css` | Responsive, accessible visual system |
-| `assets/ascendancy-double-star.png` | Existing public emblem |
-| `data/directory.json` | Single approved public data and relations source |
-| `src/main.js` | Clerk routing, directory, tabs, and map interactions |
-| `scripts/validate-directory.mjs` | Schema and public-boundary validation |
-| `tests/front-desk.test.mjs` | Structural and integrity regression tests |
-| `.github/workflows/` | Validation and GitHub Pages deployment |
-
-Future conversational behavior would require a separate, source-bounded review. It is not part of Stage 1.
-
-No license is granted by omission; the institution can determine its reuse policy separately.
+No license has been selected for this repository.
