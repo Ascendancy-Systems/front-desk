@@ -6,109 +6,175 @@
     { "id": "organization-profile", "label": "Ascendancy Systems public organization profile", "url": "https://github.com/Ascendancy-Systems/.github/blob/main/profile/README.md" },
     { "id": "meta-gauge-record", "label": "MG-001 public operational record", "url": "https://github.com/Ascendancy-Systems/.github/blob/main/profile/META-GAUGE.md" },
     { "id": "meta-gauge-repository", "label": "GMG-A public repository and demonstrator", "url": "https://github.com/Ascendancy-Systems/meta-gauge" },
-    { "id": "approved-orientation", "label": "Approved Front Desk v0.2 orientation", "url": null }
+    {"id": "approved-orientation", "label": "Front Desk v0.2 editorial scope", "url": "https://github.com/Ascendancy-Systems/front-desk/pull/1"},
+    {"id": "research-overview", "label": "Profile §III · Research & Development", "url": "https://github.com/Ascendancy-Systems/.github/blob/main/profile/README.md#iii-research--development"}
   ],
   "entries": [
     {
-      "id": "institution", "title": "Institution & Stewardship", "type": "Institution", "maturity": "Public record", "availability": "Public orientation",
+      "id": "institution",
+      "title": "Institution & Stewardship",
+      "type": "Institution",
+      "maturity": "Public record",
+      "availability": "Public orientation",
       "summary": "Purpose, development status, public presence, and stewardship.",
       "detail": "The public organizational profile describes Ascendancy Systems as an independent research and development program concerned with knowledge, cognition, complex systems, and technological implementation.",
       "sourceIds": ["organization-profile"],
-      "destination": { "kind": "link", "url": "https://github.com/Ascendancy-Systems/.github", "label": "Read the public profile" },
-      "map": { "x": 50, "y": 13, "region": "Institution" },
-      "relations": [{ "target": "constitution", "kind": "stewards" }, { "target": "canonical-series", "kind": "orients" }, { "target": "research-disciplines", "kind": "orients" }, { "target": "continuum", "kind": "orients" }]
+      "destination": {"kind": "link", "url": "https://github.com/Ascendancy-Systems/.github/blob/main/profile/README.md", "label": "Read the public profile"},
+      "relations": [
+        {"kind": "lists", "target": "research-disciplines", "sourceId": "organization-profile"},
+        {"kind": "lists", "target": "meta-gauge", "sourceId": "organization-profile"}
+      ]
     },
     {
-      "id": "constitution", "title": "Constitution & Governance", "type": "Institution", "maturity": "Developing framework", "availability": "Public description limited",
+      "id": "constitution",
+      "title": "Constitution & Governance",
+      "type": "Institution",
+      "maturity": "Developing framework",
+      "availability": "Public description limited",
       "summary": "Constitutional stewardship and recursive institutional coordination.",
-      "detail": "The public profile identifies constitutional stewardship, governing architecture, recursive governance, institutes, and institutions. No separate public constitution is represented here as published.",
+      "detail": "The public profile describes constitutional stewardship and identifies governance as a field of inquiry.",
       "sourceIds": ["organization-profile", "approved-orientation"],
-      "destination": { "kind": "conceptual", "label": "Conceptual orientation only" },
-      "map": { "x": 22, "y": 27, "region": "Institution" },
-      "relations": [{ "target": "governance", "kind": "frames" }, { "target": "institution", "kind": "is-stewarded-by" }]
+      "destination": {"kind": "conceptual", "label": "Description only"},
+      "relations": []
     },
     {
-      "id": "canonical-series", "title": "Canonical Six-Book Series", "type": "Canon", "maturity": "Work in development", "availability": "Not publicly listed",
-      "summary": "A canonical sequence acknowledged without exposing unpublished manuscripts.",
-      "detail": "The Front Desk records the existence of a six-book canonical series as an orientation point. Titles, sequence details, and manuscript contents are intentionally not supplied until approved for public presentation.",
+      "id": "canonical-series",
+      "title": "Canonical Six-Book Series",
+      "type": "Canon",
+      "maturity": "Work in development",
+      "availability": "Orientation only",
+      "summary": "An orientation to the six-book series as a whole.",
+      "detail": "The Front Desk names the series as a whole. Individual books and manuscripts have no public edition linked here.",
       "sourceIds": ["approved-orientation"],
-      "destination": { "kind": "conceptual", "label": "No public edition available" },
-      "map": { "x": 78, "y": 27, "region": "Canon" },
-      "relations": [{ "target": "research-disciplines", "kind": "informs" }, { "target": "cathedral", "kind": "resonates-with" }]
+      "destination": {"kind": "conceptual", "label": "No public edition linked"},
+      "relations": []
     },
     {
-      "id": "research-disciplines", "title": "Research & Disciplines", "type": "Discipline", "maturity": "Active development", "availability": "Public orientation",
+      "id": "research-disciplines",
+      "title": "Research & Disciplines",
+      "type": "Discipline",
+      "maturity": "Active development",
+      "availability": "Public orientation",
       "summary": "The public entry point to the program's intersecting fields of inquiry.",
-      "detail": "The public profile groups the research for orientation rather than as a finalized taxonomy. The individual field records below retain that provisional boundary.",
-      "sourceIds": ["organization-profile"],
-      "destination": { "kind": "link", "url": "https://github.com/Ascendancy-Systems/.github#iii-research--development", "label": "View research orientation" },
-      "map": { "x": 50, "y": 36, "region": "Research" },
-      "relations": [{ "target": "foundations-ethics", "kind": "contains" }, { "target": "systems-dynamics", "kind": "contains" }, { "target": "architectonics-knowledge", "kind": "contains" }, { "target": "semantics-poetics", "kind": "contains" }, { "target": "governance", "kind": "contains" }, { "target": "research-infrastructure", "kind": "contains" }]
+      "detail": "Section III of the public profile introduces six fields. Follow a field on the map to see how the profile describes its work.",
+      "sourceIds": ["research-overview"],
+      "destination": {"kind": "link", "url": "https://github.com/Ascendancy-Systems/.github/blob/main/profile/README.md#iii-research--development", "label": "View research orientation"},
+      "relations": [
+        {"target": "foundations-ethics", "kind": "contains", "sourceId": "research-overview"},
+        {"target": "systems-dynamics", "kind": "contains", "sourceId": "research-overview"},
+        {"target": "architectonics-knowledge", "kind": "contains", "sourceId": "research-overview"},
+        {"target": "semantics-poetics", "kind": "contains", "sourceId": "research-overview"},
+        {"target": "governance", "kind": "contains", "sourceId": "research-overview"},
+        {"target": "research-infrastructure", "kind": "contains", "sourceId": "research-overview"}
+      ]
     },
     {
-      "id": "foundations-ethics", "title": "Foundations & Ethics", "type": "Discipline", "maturity": "Active development", "availability": "Orientation only",
+      "id": "foundations-ethics",
+      "title": "Foundations & Ethics",
+      "type": "Discipline",
+      "maturity": "Active development",
+      "availability": "Orientation only",
       "summary": "Perceptual, regulative, and normative inquiry.",
-      "detail": "The public profile names Perceptual Ethics, Regulative Ethics, and Normative Ethics. Dedicated public editions have not been verified.",
-      "sourceIds": ["organization-profile"], "destination": { "kind": "conceptual", "label": "No dedicated public edition" },
-      "map": { "x": 17, "y": 49, "region": "Research" }, "relations": [{ "target": "research-disciplines", "kind": "part-of" }]
+      "detail": "The profile names Perceptual Ethics, Regulative Ethics, and Normative Ethics.",
+      "sourceIds": ["organization-profile"],
+      "destination": {"kind": "conceptual", "label": "Description only"},
+      "relations": []
     },
     {
-      "id": "systems-dynamics", "title": "Systems & Dynamics", "type": "Discipline", "maturity": "Active development", "availability": "Orientation only",
+      "id": "systems-dynamics",
+      "title": "Systems & Dynamics",
+      "type": "Discipline",
+      "maturity": "Active development",
+      "availability": "Orientation only",
       "summary": "Cybernetics, recursion, paradox, and systemic relations.",
-      "detail": "The public profile names Latticeal Cybernetics and Paradox Network Systems Theory as research directions, not as verified downloadable publications.",
-      "sourceIds": ["organization-profile"], "destination": { "kind": "conceptual", "label": "No dedicated public edition" },
-      "map": { "x": 38, "y": 55, "region": "Research" }, "relations": [{ "target": "research-disciplines", "kind": "part-of" }, { "target": "meta-gauge", "kind": "contextualizes" }]
+      "detail": "The profile names Latticeal Cybernetics and Paradox Network Systems Theory.",
+      "sourceIds": ["organization-profile"],
+      "destination": {"kind": "conceptual", "label": "Description only"},
+      "relations": []
     },
     {
-      "id": "architectonics-knowledge", "title": "Architectonics & Knowledge Architecture", "type": "Discipline", "maturity": "Active development", "availability": "Orientation only",
+      "id": "architectonics-knowledge",
+      "title": "Architectonics & Knowledge Architecture",
+      "type": "Discipline",
+      "maturity": "Active development",
+      "availability": "Orientation only",
       "summary": "Structures of knowledge, cognition, interfaces, and experience.",
       "detail": "The public profile includes Architectonics, Knowledge Architecture, Interface Architecture, Emotional Architecture, and Psychospatial Architecture.",
-      "sourceIds": ["organization-profile"], "destination": { "kind": "conceptual", "label": "No dedicated public edition" },
-      "map": { "x": 62, "y": 55, "region": "Research" }, "relations": [{ "target": "research-disciplines", "kind": "part-of" }, { "target": "continuum", "kind": "supports" }]
+      "sourceIds": ["organization-profile"],
+      "destination": {"kind": "conceptual", "label": "Description only"},
+      "relations": []
     },
     {
-      "id": "semantics-poetics", "title": "Semantics, Poetics & Embodiment", "type": "Discipline", "maturity": "Active development", "availability": "Orientation only",
+      "id": "semantics-poetics",
+      "title": "Semantics, Poetics & Embodiment",
+      "type": "Discipline",
+      "maturity": "Active development",
+      "availability": "Orientation only",
       "summary": "Meaning, interpretation, aesthetic expression, and poetic structures.",
-      "detail": "The public profile names Field Semantics, Aesthetic Poetics, custodial-architectonic registers, and literature without claiming public editions.",
-      "sourceIds": ["organization-profile"], "destination": { "kind": "conceptual", "label": "No dedicated public edition" },
-      "map": { "x": 83, "y": 49, "region": "Research" }, "relations": [{ "target": "research-disciplines", "kind": "part-of" }, { "target": "cathedral", "kind": "informs" }]
+      "detail": "The profile names Field Semantics, Aesthetic Poetics, custodial-architectonic registers, and literature.",
+      "sourceIds": ["organization-profile"],
+      "destination": {"kind": "conceptual", "label": "Description only"},
+      "relations": []
     },
     {
-      "id": "governance", "title": "Governance & Meta-Architecture", "type": "Discipline", "maturity": "Active development", "availability": "Orientation only",
+      "id": "governance",
+      "title": "Governance & Meta-Architecture",
+      "type": "Discipline",
+      "maturity": "Active development",
+      "availability": "Orientation only",
       "summary": "Governing structures, recursive coordination, and institutions.",
-      "detail": "This is a public research direction. The Front Desk is a navigation layer and does not itself exercise governing authority.",
-      "sourceIds": ["organization-profile"], "destination": { "kind": "conceptual", "label": "No dedicated public edition" },
-      "map": { "x": 26, "y": 72, "region": "Research" }, "relations": [{ "target": "research-disciplines", "kind": "part-of" }, { "target": "constitution", "kind": "examines" }]
+      "detail": "The profile names governing architecture, recursive governance, and institutes and institutions.",
+      "sourceIds": ["organization-profile"],
+      "destination": {"kind": "conceptual", "label": "Description only"},
+      "relations": []
     },
     {
-      "id": "research-infrastructure", "title": "Research Infrastructure & Experimentation", "type": "Infrastructure", "maturity": "Active development", "availability": "Mixed public and private",
+      "id": "research-infrastructure",
+      "title": "Research Infrastructure & Experimentation",
+      "type": "Infrastructure",
+      "maturity": "Active development",
+      "availability": "Mixed public and private",
       "summary": "Repositories, tools, field notes, and experimental practices.",
       "detail": "The public profile identifies infrastructure categories while deliberately distinguishing public repositories from private vaults, notes, and unpublished material.",
       "sourceIds": ["organization-profile"],
-      "destination": { "kind": "link", "url": "https://github.com/orgs/Ascendancy-Systems/repositories", "label": "Browse public repositories" },
-      "map": { "x": 74, "y": 72, "region": "Infrastructure" }, "relations": [{ "target": "continuum", "kind": "supports" }, { "target": "meta-gauge", "kind": "hosts" }]
+      "destination": {"kind": "link", "url": "https://github.com/orgs/Ascendancy-Systems/repositories", "label": "Browse public repositories"},
+      "relations": []
     },
     {
-      "id": "meta-gauge", "title": "Meta-Gauge · MG-001 / GMG-A", "type": "Instrument", "maturity": "Experimental", "availability": "Public demonstrator",
+      "id": "meta-gauge",
+      "title": "Meta-Gauge · MG-001 / GMG-A",
+      "type": "Instrument",
+      "maturity": "Experimental",
+      "availability": "Public demonstrator",
       "summary": "A registered orientation instrument and experimental spatial implementation.",
-      "detail": "GMG-A is a geometric simulation from versioned state. It is not presented as live telemetry or as a source-calibrated research reading.",
+      "detail": "The spatial viewer runs from a versioned pose. The separate MG-001 operational record holds the qualitative EF-001 assessment.",
       "sourceIds": ["meta-gauge-record", "meta-gauge-repository"],
-      "destination": { "kind": "link", "url": "https://ascendancy-systems.github.io/meta-gauge/", "label": "Open the public demonstrator" },
-      "map": { "x": 50, "y": 82, "region": "Systems" }, "relations": [{ "target": "systems-dynamics", "kind": "is-contextualized-by" }, { "target": "research-infrastructure", "kind": "is-hosted-by" }]
+      "destination": {"kind": "link", "url": "https://ascendancy-systems.github.io/meta-gauge/", "label": "Open the public demonstrator"},
+      "relations": []
     },
     {
-      "id": "continuum", "title": "Continuum & Knowledge Infrastructure", "type": "Infrastructure", "maturity": "Developing concept", "availability": "Public description limited",
+      "id": "continuum",
+      "title": "Continuum & Knowledge Infrastructure",
+      "type": "Infrastructure",
+      "maturity": "Developing concept",
+      "availability": "Public description limited",
       "summary": "Continuity, memory, and navigation across a developing body of knowledge.",
-      "detail": "The Front Desk uses Continuum as a bounded orientation to knowledge continuity and infrastructure. It does not expose private archives, vault contents, or an unpublished canonical model.",
-      "sourceIds": ["organization-profile", "approved-orientation"], "destination": { "kind": "conceptual", "label": "Conceptual orientation only" },
-      "map": { "x": 31, "y": 91, "region": "Infrastructure" }, "relations": [{ "target": "research-infrastructure", "kind": "is-supported-by" }, { "target": "cathedral", "kind": "connects-to" }]
+      "detail": "Continuum is listed in the Front Desk as a developing concept in knowledge infrastructure.",
+      "sourceIds": ["approved-orientation"],
+      "destination": {"kind": "conceptual", "label": "Description only"},
+      "relations": []
     },
     {
-      "id": "cathedral", "title": "Cathedral", "type": "Environment", "maturity": "Developing concept", "availability": "Public description limited",
+      "id": "cathedral",
+      "title": "Cathedral",
+      "type": "Environment",
+      "maturity": "Developing concept",
+      "availability": "Public description limited",
       "summary": "A symbolic and experiential environment within the broader orientation.",
-      "detail": "Cathedral is named here as a conceptual environment. The Front Desk does not publish a private implementation, claim a completed public venue, or assign it an invented canonical role.",
-      "sourceIds": ["approved-orientation"], "destination": { "kind": "conceptual", "label": "Conceptual orientation only" },
-      "map": { "x": 69, "y": 91, "region": "Environment" }, "relations": [{ "target": "semantics-poetics", "kind": "is-informed-by" }, { "target": "continuum", "kind": "connects-to" }]
+      "detail": "The Front Desk names Cathedral as a developing symbolic and experiential environment.",
+      "sourceIds": ["approved-orientation"],
+      "destination": {"kind": "conceptual", "label": "Description only"},
+      "relations": []
     }
   ]
 }

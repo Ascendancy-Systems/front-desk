@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { validateDirectory } from '../scripts/validate-directory.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -41,7 +42,7 @@ test('conceptual destinations cannot masquerade as public links', () => {
 });
 
 test('the experience stays static and explicitly discloses that the Clerk is not live AI', () => {
-  assert.match(html, /no live AI backend/i);
+  assert.match(html, /scripted guide/i);
   assert.doesNotMatch(html + script, /openai|anthropic|apiKey|websocket/i);
   assert.match(script, /fetch\(DIRECTORY_URL\)/);
 });
@@ -52,4 +53,19 @@ test('repository and Pages references use front-desk, not the retired project pa
   assert.match(files, /ascendancy-systems\.github\.io\/front-desk\//);
   assert.doesNotMatch(files, /Ascendancy-Systems\/ascendancy\.systems/);
   assert.doesNotMatch(files, /ascendancy-systems\.github\.io\/ascendancy\.systems\//);
+});
+
+test('map connections require a known target and a source cited by their owner', () => {
+  for (const [property, message] of [['target', /unknown relation target/], ['sourceId', /requires a cited source/]]) {
+    const copy = structuredClone(directory);
+    copy.entries.find((entry) => entry.relations.length).relations[0][property] = 'missing';
+    assert.throws(() => validateDirectory(copy), message);
+  }
+});
+
+test('the research overview connects all six public fields, including infrastructure', () => {
+  const research = directory.entries.find((entry) => entry.id === 'research-disciplines');
+  const fields = research.relations.filter((edge) => edge.kind === 'contains');
+  assert.equal(new Set(fields.map((edge) => edge.target)).size, 6);
+  assert.ok(fields.some((edge) => edge.target === 'research-infrastructure'));
 });
