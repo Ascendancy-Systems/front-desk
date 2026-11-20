@@ -1,0 +1,104 @@
+{
+  "version": "0.1.0",
+  "updated": "2026-11-20",
+  "source": "https://github.com/Ascendancy-Systems/.github",
+  "purpose": "Curated public navigation only. These entries do not constitute a formal research ontology or an inventory of published manuscripts.",
+  "entries": [
+    {
+      "id": "foundations-ethics",
+      "title": "Foundations & Ethics",
+      "eyebrow": "Research · 01",
+      "category": "Research",
+      "summary": "Perception, ethical regulation, and normative relationships.",
+      "detail": "Includes Perceptual Ethics and Regulative Ethics. These works are identified in the institution's public orientation; a dedicated public edition has not been verified.",
+      "status": "Orientation only",
+      "url": "https://github.com/Ascendancy-Systems/.github",
+      "linkLabel": "Institutional overview",
+      "map": { "x": 21, "y": 18 }
+    },
+    {
+      "id": "systems-dynamics",
+      "title": "Systems & Dynamics",
+      "eyebrow": "Research · 02",
+      "category": "Research",
+      "summary": "Cybernetics, recursion, paradox, and complex systems.",
+      "detail": "Includes Latticeal Cybernetics and Paradox Network Systems Theory. The listing identifies research directions, not verified downloadable publications.",
+      "status": "Orientation only",
+      "url": "https://github.com/Ascendancy-Systems/.github",
+      "linkLabel": "Institutional overview",
+      "map": { "x": 50, "y": 13 }
+    },
+    {
+      "id": "architectonics-knowledge",
+      "title": "Architectonics & Knowledge Architecture",
+      "eyebrow": "Research · 03",
+      "category": "Research",
+      "summary": "Structures of knowledge, cognition, and interfaces.",
+      "detail": "Encompasses Architectonics, Knowledge Architecture, Interface Architecture, Emotional Architecture, and Psychospatial Architecture as named in the public profile.",
+      "status": "Orientation only",
+      "url": "https://github.com/Ascendancy-Systems/.github",
+      "linkLabel": "Institutional overview",
+      "map": { "x": 79, "y": 18 }
+    },
+    {
+      "id": "semantics-poetics",
+      "title": "Semantics, Poetics & Embodiment",
+      "eyebrow": "Research · 04",
+      "category": "Research",
+      "summary": "Meaning, expression, interpretation, and aesthetic form.",
+      "detail": "Includes Field Semantics, Aesthetic Poetics, registers, and associated poetic work. Publication availability is not established here.",
+      "status": "Orientation only",
+      "url": "https://github.com/Ascendancy-Systems/.github",
+      "linkLabel": "Institutional overview",
+      "map": { "x": 15, "y": 52 }
+    },
+    {
+      "id": "governance",
+      "title": "Governance & Meta-Architecture",
+      "eyebrow": "Research · 05",
+      "category": "Research",
+      "summary": "Institutional structures and recursive coordination.",
+      "detail": "Research into governing architecture, recursive governance, institutes, and institutions. This directory is not a governing authority.",
+      "status": "Orientation only",
+      "url": "https://github.com/Ascendancy-Systems/.github",
+      "linkLabel": "Institutional overview",
+      "map": { "x": 85, "y": 52 }
+    },
+    {
+      "id": "infrastructure",
+      "title": "Research Infrastructure & Experimentation",
+      "eyebrow": "Research · 06",
+      "category": "Research",
+      "summary": "Vaults, repositories, field notes, and experimental work.",
+      "detail": "The program's infrastructure for documentation, research, experimentation, and technical implementation. Public and private materials are intentionally distinguished.",
+      "status": "Orientation only",
+      "url": "https://github.com/Ascendancy-Systems/.github",
+      "linkLabel": "Institutional overview",
+      "map": { "x": 21, "y": 85 }
+    },
+    {
+      "id": "meta-gauge",
+      "title": "Meta-Gauge · GMG-A",
+      "eyebrow": "Instrument · 01",
+      "category": "Instrument",
+      "summary": "An experimental gyroscopic and spatial instrument.",
+      "detail": "Explore the interactive GMG-A demonstrator. Its ring poses and angles are geometric simulation; it is not yet calibrated to research telemetry or the EF-001 assessment.",
+      "status": "Live demonstration",
+      "url": "https://ascendancy-systems.github.io/meta-gauge/",
+      "linkLabel": "Launch the Meta-Gauge",
+      "map": { "x": 50, "y": 89 }
+    },
+    {
+      "id": "institution",
+      "title": "The Institution & Stewardship",
+      "eyebrow": "Institution · 01",
+      "category": "Institution",
+      "summary": "Purpose, fields, development status, and stewardship.",
+      "detail": "Read the public organizational profile for Ascendancy Systems' institutional orientation, research fields, development status, and stewardship.",
+      "status": "Public record",
+      "url": "https://github.com/Ascendancy-Systems/.github",
+      "linkLabel": "Read the institutional profile",
+      "map": { "x": 79, "y": 85 }
+    }
+  ]
+}

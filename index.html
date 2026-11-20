@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0a1117">
+  <meta name="description" content="Welcome to Ascendancy Systems. Find research fields, public instruments, and institutional information through the Front Desk, Directory, and Map.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>The Front Desk — Ascendancy Systems</title>
+  <link rel="icon" href="./assets/ascendancy-double-star.png" type="image/png">
+  <link rel="stylesheet" href="./assets/styles.css">
+  <script type="module" src="./src/main.js"></script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <div class="site-shell">
+    <header class="masthead" aria-label="Site header">
+      <a class="identity" href="#home" aria-label="Ascendancy Systems home">
+        <img src="./assets/ascendancy-double-star.png" alt="" class="identity-emblem" width="44" height="44">
+        <span><strong>ASCENDANCY</strong><span class="identity-sub">S Y S T E M S</span></span>
+      </a>
+      <nav aria-label="Primary navigation" class="site-nav">
+        <a href="#front-desk">Front Desk</a>
+        <a href="#directory">Directory</a>
+        <a href="#institutional-map">Map</a>
+        <a href="https://ascendancy-systems.github.io/meta-gauge/" target="_blank" rel="noopener noreferrer">Meta-Gauge <span aria-hidden="true">↗</span></a>
+      </nav>
+      <span class="masthead-note">INDEPENDENT RESEARCH & DEVELOPMENT</span>
+    </header>
+
+    <main id="main">
+      <section class="intro" id="home" aria-labelledby="welcome-heading">
+        <div class="intro-copy">
+          <span class="eyebrow"><span class="eyebrow-rule"></span> INSTITUTIONAL RECEPTION · 001</span>
+          <h1 id="welcome-heading">A place<br>to <em>begin.</em></h1>
+          <p class="lead">Welcome to Ascendancy Systems—an independent research and development program exploring knowledge, cognition, complex systems, and the technologies that connect them.</p>
+          <p class="intro-secondary">Whether you have come to explore an idea or locate a working instrument, the Front Desk can help you find your way.</p>
+          <div class="intro-actions">
+            <a class="button button-primary" href="#directory">Explore the directory <span aria-hidden="true">↗</span></a>
+            <a class="button button-outline" href="#institutional-map">View the institutional map</a>
+          </div>
+          <p class="intro-footnote">A public entrance to a developing body of work.</p>
+        </div>
+        <div class="entrance-art" aria-hidden="true">
+          <div class="entrance-frame">
+            <div class="entrance-arch"></div>
+            <div class="entrance-vertical entrance-vertical-left"></div>
+            <div class="entrance-vertical entrance-vertical-right"></div>
+            <div class="entrance-ornament"></div>
+            <img src="./assets/ascendancy-double-star.png" alt="" class="entrance-emblem">
+            <span class="entrance-legend">THE THRESHOLD</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="rule-deco" aria-hidden="true"><span>✧</span></div>
+
+      <section class="reception" id="front-desk" aria-labelledby="front-desk-heading">
+        <div class="section-heading">
+          <span class="eyebrow">I · RECEPTION</span>
+          <h2 id="front-desk-heading">The Front Desk</h2>
+          <p>An introduction when you want one. Clear navigation when you don't.</p>
+        </div>
+        <div class="reception-grid">
+          <div class="clerk-card">
+            <div class="clerk-top">
+              <div class="clerk-avatar" role="img" aria-label="Stylized brass line-art portrait representing the Clerk">
+                <svg viewBox="0 0 110 110" aria-hidden="true">
+                  <defs><linearGradient id="clerk-metal" x1="0" x2="1"><stop stop-color="#a17b48"/><stop offset=".5" stop-color="#e3c890"/><stop offset="1" stop-color="#a17b48"/></linearGradient></defs>
+                  <circle cx="55" cy="55" r="49" fill="none" stroke="url(#clerk-metal)" stroke-width="1" opacity=".75"/>
+                  <path d="M25 89Q33 73 47 70L47 63Q39 57 39 44L39 37Q38 22 55 22Q72 22 71 37L71 44Q71 57 63 63L63 70Q77 73 85 89" fill="none" stroke="url(#clerk-metal)" stroke-width="2"/>
+                  <path d="M40 37Q53 34 55 25Q61 34 70 37M44 45H51M59 45H66M49 57Q55 60 61 57M33 88H77M43 73L55 84L67 73" fill="none" stroke="url(#clerk-metal)" stroke-width="1.3" stroke-linecap="round"/>
+                  <path d="M55 78L58 84L55 90L52 84Z" fill="#d0af70"/>
+                  <path d="M55 8V17M55 93V102M8 55H17M93 55H102" stroke="#b89a65" stroke-width=".7" opacity=".7"/>
+                </svg>
+              </div>
+              <div>
+                <span class="eyebrow">OFFICE OF RECEPTION</span>
+                <h3>The Clerk</h3>
+                <span class="clerk-role"><span class="role-dot"></span> Public orientation · Stage 1</span>
+              </div>
+            </div>
+            <div class="clerk-message" aria-live="polite" aria-atomic="true">
+              <span class="message-label">FROM THE DESK</span>
+              <p id="clerk-response">Welcome. I can introduce the institution, direct you to a research field, or guide you to a public demonstration. You are equally welcome to browse independently.</p>
+              <a id="clerk-link" class="inline-link" href="https://github.com/Ascendancy-Systems/.github" target="_blank" rel="noopener noreferrer" hidden>Open destination ↗</a>
+            </div>
+            <p class="small-label">HOW MAY I DIRECT YOU?</p>
+            <div class="clerk-choices" role="group" aria-label="Common requests">
+              <button type="button" data-clerk-action="research"><span aria-hidden="true">✦</span> Introduce the research</button>
+              <button type="button" data-clerk-action="instrument"><span aria-hidden="true">◎</span> Find an instrument</button>
+              <button type="button" data-clerk-action="publications"><span aria-hidden="true">▤</span> Are publications available?</button>
+              <button type="button" data-clerk-action="map"><span aria-hidden="true">⌘</span> Show me around</button>
+            </div>
+            <p class="clerk-disclosure">This first Clerk is a guided interface, not a live AI agent. Its directions come from the same curated public directory used below.</p>
+          </div>
+          <aside class="reception-principles" aria-label="How the Front Desk works">
+            <div class="aside-number">01 / 03</div>
+            <h3>Welcome without<br>requiring conversation.</h3>
+            <p>The directory and map work on their own. The Clerk is here when a visitor wants an introduction, an explanation, or a route to the next place.</p>
+            <div class="aside-rule"></div>
+            <div class="aside-row"><span>RECEPTION</span><strong>Welcome & guidance</strong></div>
+            <div class="aside-row"><span>DIRECTORY</span><strong>Verified public destinations</strong></div>
+            <div class="aside-row"><span>MAP</span><strong>Navigation, not ontology</strong></div>
+            <div class="aside-row"><span>RECORD</span><strong>Source-aware listings</strong></div>
+          </aside>
+        </div>
+      </section>
+
+      <div class="rule-deco" aria-hidden="true"><span>✧</span></div>
+
+      <section class="directory-section" id="directory" aria-labelledby="directory-heading">
+        <div class="section-heading">
+          <span class="eyebrow">II · DIRECTORY</span>
+          <h2 id="directory-heading">Find your way.</h2>
+          <p>Explore the institution's public research areas and working destinations.</p>
+        </div>
+        <div class="directory-toolbar">
+          <label class="search-wrap" for="directory-query"><span aria-hidden="true">⌕</span><input type="search" id="directory-query" placeholder="Search fields, projects, and instruments" autocomplete="off"><span class="sr-only">Search public directory</span></label>
+          <div class="directory-filters" role="group" aria-label="Filter directory entries">
+            <button class="filter selected" type="button" data-filter="All" aria-pressed="true">All</button>
+            <button class="filter" type="button" data-filter="Research" aria-pressed="false">Research</button>
+            <button class="filter" type="button" data-filter="Instrument" aria-pressed="false">Instruments</button>
+            <button class="filter" type="button" data-filter="Institution" aria-pressed="false">Institution</button>
+          </div>
+        </div>
+        <div class="directory-meta"><span id="directory-count">Loading directory…</span><span>PUBLIC ORIENTATION · UPDATED FROM APPROVED RECORDS</span></div>
+        <div id="directory-cards" class="directory-grid" aria-live="polite"></div>
+        <div class="directory-empty" id="directory-empty" hidden>No matching public entries. Try another term or category.</div>
+      </section>
+
+      <div class="rule-deco" aria-hidden="true"><span>✧</span></div>
+
+      <section class="map-section" id="institutional-map" aria-labelledby="map-heading">
+        <div class="section-heading">
+          <span class="eyebrow">III · INSTITUTIONAL MAP</span>
+          <h2 id="map-heading">An orientation of the whole.</h2>
+          <p>Select a destination to see its public scope and route. These connections show navigation, not asserted theoretical dependencies.</p>
+        </div>
+        <div class="map-frame">
+          <div class="map-canvas" id="map-canvas" aria-label="Interactive institutional navigation map">
+            <svg id="map-lines" class="map-lines" viewBox="0 0 1000 590" preserveAspectRatio="none" aria-hidden="true"></svg>
+            <div class="map-center" aria-hidden="true"><img src="./assets/ascendancy-double-star.png" alt=""><span>ASCENDANCY<br> SYSTEMS</span><small>INSTITUTIONAL<br> ORIENTATION</small></div>
+            <div id="map-nodes" class="map-nodes"></div>
+          </div>
+          <div class="map-info" id="map-detail" aria-live="polite">
+            <span class="eyebrow">SELECT A DESTINATION</span>
+            <h3 id="map-detail-title">The institution, at a glance</h3>
+            <p id="map-detail-description">Choose any destination on the map to learn what it contains and where to go next.</p>
+            <a id="map-detail-link" href="https://github.com/Ascendancy-Systems/.github" target="_blank" rel="noopener noreferrer" class="inline-link" hidden>Open destination ↗</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="closing" aria-labelledby="closing-heading">
+        <img src="./assets/ascendancy-double-star.png" alt="" width="80" height="80" loading="lazy">
+        <span class="eyebrow">THE THRESHOLD REMAINS OPEN</span>
+        <h2 id="closing-heading">Inquiry begins with orientation.</h2>
+        <p>Ascendancy Systems is developing. Its public front desk will grow as research, publications, and instruments become ready for visitors.</p>
+        <a class="button button-outline" href="https://github.com/Ascendancy-Systems/.github" target="_blank" rel="noopener noreferrer">Read the institutional record ↗</a>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>✳ ASCENDANCY SYSTEMS</span>
+      <span>INDEPENDENT RESEARCH & DEVELOPMENT</span>
+      <a href="https://github.com/orgs/Ascendancy-Systems/repositories" target="_blank" rel="noopener noreferrer">Public repositories ↗</a>
+    </footer>
+  </div>
+  <div id="load-error" role="alert" class="load-error" hidden>Directory unavailable. You can still visit the <a href="https://github.com/Ascendancy-Systems/.github">institutional profile</a> or <a href="https://ascendancy-systems.github.io/meta-gauge/">Meta-Gauge</a>.</div>
+</body>
+</html>
