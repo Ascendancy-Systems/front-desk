@@ -94,7 +94,25 @@ button { cursor: pointer; }
 .card-actions button:hover, .text-link:hover { color: white; }
 .empty-state { border: 1px solid var(--line); color: var(--soft); padding: 2rem; }
 
-.map-layout { display: grid; gap: 1rem; }
+.map-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+.institutional-map { min-width: 0; margin: 0; container-type: inline-size; }
+.map-pan-hint { display: none; }
+@container (max-width: 45rem) {
+  .map-pan-hint { display: inline; }
+}
+.institutional-map h3 { margin: 0; font: 400 1.65rem var(--serif); }
+.institutional-map figcaption { margin: .35rem 0 .85rem; color: var(--soft); font-size: .9rem; }
+#map-window { overflow-x: auto; border: 1px solid var(--line); }
+#map-canvas { position: relative; isolation: isolate; min-width: 45rem; height: 34rem; background: radial-gradient(ellipse at 50% 32%, #1c353d, var(--void) 75%); }
+#map-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+#map-lines line { stroke: var(--line-strong); stroke-width: 2; }
+#map-lines line.active { stroke: var(--gold); stroke-width: 3; }
+.map-node { position: absolute; transform: translate(-50%, -50%); width: 19%; max-width: 11.5rem; min-height: 3.6rem; padding: .45rem .55rem; border: 1px solid var(--line-strong); background: var(--surface); color: var(--text); line-height: 1.25; }
+.map-node small { display: block; margin-bottom: .2rem; color: var(--gold); font-size: .65rem; letter-spacing: .09em; text-transform: uppercase; }
+.map-node span { font: 400 1rem/1.15 var(--serif); }
+.map-node:hover, .map-node[aria-pressed="true"] { background: var(--surface-3); border-color: var(--gold); }
+.map-node[aria-pressed="true"] { box-shadow: inset 0 -3px var(--gold); }
+#map-return { min-height: 44px; margin-top: 1rem; padding: .4rem .8rem; border: 1px solid var(--line-strong); color: var(--soft); background: var(--void); }
 .map-picker { display: grid; gap: .4rem; color: var(--soft); font-size: .85rem; }
 .map-picker select { width: 100%; min-height: 44px; padding: .5rem; color: var(--text); background: var(--void); border: 1px solid var(--line-strong); }
 .map-detail { padding: clamp(1rem, 3vw, 2rem); background: var(--surface); border-left: 2px solid var(--copper); }

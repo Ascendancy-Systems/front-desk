@@ -41,6 +41,11 @@ export function validateDirectory(data) {
       assert.notEqual(entry[key], undefined, `${entry.id}: missing ${key}`);
     }
     assert.match(entry.id, /^[a-z0-9-]+$/);
+    assert.ok(entry.map && typeof entry.map.region === 'string' && entry.map.region.trim(), `${entry.id}: map region required`);
+    for (const axis of ['x', 'y']) {
+      const value = entry.map[axis];
+      assert.ok(Number.isFinite(value) && value > 0 && value < 100, `${entry.id}: invalid map ${axis}`);
+    }
     assert.ok(allowedTypes.has(entry.type), `${entry.id}: unsupported type`);
     assert.ok(allowedMaturity.has(entry.maturity), `${entry.id}: unsupported maturity`);
     assert.ok(allowedAvailability.has(entry.availability), `${entry.id}: unsupported availability`);
