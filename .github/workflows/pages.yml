@@ -26,6 +26,7 @@ jobs:
           cp assets/styles.css assets/ascendancy-double-star.png _site/assets/
           cp src/main.js _site/src/
           cp data/directory.json _site/data/
+          touch _site/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
