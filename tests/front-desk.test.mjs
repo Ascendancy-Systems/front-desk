@@ -2,30 +2,54 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 
-const directory = JSON.parse(fs.readFileSync(new URL('../data/directory.json', import.meta.url), 'utf8'));
-const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-const js = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+const root = fileURLToPath(new URL('../', import.meta.url));
+const read = (path) => fs.readFileSync(new URL(path, import.meta.url), 'utf8');
+const html = read('../index.html');
+const script = read('../src/main.js');
+const directory = JSON.parse(read('../data/directory.json'));
 
-test('directory data passes the independent validation script', () => {
-  execFileSync(process.execPath, [new URL('../scripts/validate-directory.mjs', import.meta.url).pathname], { stdio: 'pipe' });
+test('directory data passes the independent validator on this platform', () => {
+  const validator = fileURLToPath(new URL('../scripts/validate-directory.mjs', import.meta.url));
+  execFileSync(process.execPath, [validator], { cwd: root, stdio: 'pipe' });
 });
 
-test('the Front Desk, Directory, and Map exist independently', () => {
-  for (const id of ['front-desk', 'directory', 'institutional-map', 'clerk-response', 'directory-cards', 'map-nodes']) {
-    assert.match(html, new RegExp(`id="${id}"`));
-  }
+test('the Clerk, Directory, and Map remain independently navigable', () => {
+  assert.match(html, /id="front-desk"/);
+  assert.match(html, /id="directory-panel"/);
+  assert.match(html, /id="map-panel"/);
+  assert.match(html, /role="tablist"/);
+  assert.match(script, /ArrowLeft/);
+  assert.match(script, /data-open-view/);
 });
 
-test('research categories and public instruments originate in one directory', () => {
-  assert.equal(directory.entries.filter(e => e.category === 'Research').length, 6);
-  assert.equal(directory.entries.find(e => e.id === 'meta-gauge').url, 'https://ascendancy-systems.github.io/meta-gauge/');
-  assert.match(js, /\.\.\/data\/directory\.json/);
-  assert.match(js, /renderDirectory\(\)/);
-  assert.match(js, /renderMap\(\)/);
+test('v0.2 presents the six approved perspectives without claiming an ontology', () => {
+  const types = new Set(directory.entries.map((entry) => entry.type));
+  assert.deepEqual(types, new Set(['Institution', 'Canon', 'Discipline', 'Instrument', 'Infrastructure', 'Environment']));
+  assert.match(directory.purpose, /not a canonical ontology/);
+  for (const id of ['canonical-series', 'continuum', 'cathedral']) assert.ok(directory.entries.some((entry) => entry.id === id));
 });
 
-test('the reception experience does not claim live AI capability', () => {
-  assert.match(html, /not a live AI agent/);
-  assert.doesNotMatch(html, /api\.openai\.com|api\.anthropic\.com/);
+test('conceptual destinations cannot masquerade as public links', () => {
+  const conceptual = directory.entries.filter((entry) => entry.destination.kind === 'conceptual');
+  const linked = directory.entries.filter((entry) => entry.destination.kind === 'link');
+  assert.ok(conceptual.length > 0 && linked.length > 0);
+  assert.ok(conceptual.every((entry) => !('url' in entry.destination)));
+  assert.ok(linked.every((entry) => entry.destination.url.startsWith('https://')));
+  assert.match(script, /destination\.kind === 'link'/);
+});
+
+test('the experience stays static and explicitly discloses that the Clerk is not live AI', () => {
+  assert.match(html, /no live AI backend/i);
+  assert.doesNotMatch(html + script, /openai|anthropic|apiKey|websocket/i);
+  assert.match(script, /fetch\(DIRECTORY_URL\)/);
+});
+
+test('repository and Pages references use front-desk, not the retired project path', () => {
+  const files = [html, read('../README.md'), read('../.github/workflows/pages.yml')].join('\n');
+  assert.match(files, /Ascendancy-Systems\/front-desk/);
+  assert.match(files, /ascendancy-systems\.github\.io\/front-desk\//);
+  assert.doesNotMatch(files, /Ascendancy-Systems\/ascendancy\.systems/);
+  assert.doesNotMatch(files, /ascendancy-systems\.github\.io\/ascendancy\.systems\//);
 });

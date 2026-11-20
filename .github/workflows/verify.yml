@@ -12,5 +12,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Validate public directory and Stage 1 structure
+      - name: Validate Front Desk v0.2 data and structure
         run: npm test
