@@ -63,6 +63,21 @@ test('map connections require a known target and a source cited by their owner',
   }
 });
 
+test('every map destination needs a region and valid coordinates', () => {
+  for (const [field, invalid] of [['region', ''], ['x', -1], ['y', 101]]) {
+    const copy = structuredClone(directory);
+    copy.entries[0].map[field] = invalid;
+    assert.throws(() => validateDirectory(copy), /map/);
+  }
+});
+
+test('the Map tab includes its diagram alongside the destination picker and detail record', () => {
+  const panel = html.match(/<section id="map-panel"[\s\S]*?<\/section>/)[0];
+  for (const id of ['map-canvas', 'map-nodes', 'map-lines', 'map-entry', 'map-detail-facts', 'map-relations', 'map-sources']) {
+    assert.ok(panel.includes(`id="${id}"`), `missing map element: ${id}`);
+  }
+});
+
 test('the research overview connects all six public fields, including infrastructure', () => {
   const research = directory.entries.find((entry) => entry.id === 'research-disciplines');
   const fields = research.relations.filter((edge) => edge.kind === 'contains');

@@ -87,12 +87,23 @@
 
         <section id="map-panel" class="view-panel" role="tabpanel" aria-labelledby="map-tab" hidden>
           <div id="map" class="map-layout">
+            <figure class="institutional-map" aria-labelledby="map-heading">
+              <h3 id="map-heading">Institutional map</h3>
+              <figcaption id="map-caption">Select a destination to read its record. Lines show documented connections. Positions serve as a guide to the directory.<span class="map-pan-hint"> Scroll the diagram sideways, or choose a destination from the menu below.</span></figcaption>
+              <div id="map-window" role="region" aria-label="Map of destinations" aria-describedby="map-caption" tabindex="0">
+                <div id="map-canvas">
+                  <svg id="map-lines" aria-hidden="true" focusable="false"></svg>
+                  <div id="map-nodes"></div>
+                </div>
+              </div>
+            </figure>
             <label class="map-picker" for="map-entry">Explore a destination
               <select id="map-entry"></select>
             </label>
             <article class="map-detail" aria-labelledby="map-detail-title">
               <p class="eyebrow" id="map-detail-type"></p>
               <h3 id="map-detail-title" tabindex="-1">Institution & Stewardship</h3>
+              <p id="map-detail-summary"></p>
               <p id="map-detail-description"></p>
               <dl id="map-detail-facts"></dl>
               <div id="map-destination"></div>
@@ -100,6 +111,7 @@
               <ul id="map-relations"></ul>
               <h4>Sources</h4>
               <ul id="map-sources"></ul>
+              <button type="button" id="map-return">Back to selected node</button>
             </article>
           </div>
         </section>

@@ -16,6 +16,8 @@ Edit [`data/directory.json`](./data/directory.json). The Clerk, Directory, and M
 
 Record each documented connection once, on its originating entry, with a target, relation kind, and source ID. The map derives the return route from that same record. The research overview’s membership also determines which entries its Clerk route includes.
 
+Each entry’s `map` field supplies its region and its position as percentages of the diagram. A node opens the same record as the destination picker. Only documented relations draw lines, so an entry can appear on the map before it has a documented connection.
+
 When an entry gains a public destination, update its availability, destination, and supporting source together.
 
 ## Preview and publish

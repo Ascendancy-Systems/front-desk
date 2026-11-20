@@ -57,6 +57,16 @@ function init(data) {
   const mapTitle = document.querySelector('#map-detail-title');
   const mapRelations = document.querySelector('#map-relations');
   const mapSources = document.querySelector('#map-sources');
+  const mapWindow = document.querySelector('#map-window');
+  const mapNodes = new Map();
+  const mapEdges = [];
+
+  function revealNode() {
+    const node = mapNodes.get(mapPicker.value);
+    if (node && mapWindow.clientWidth) {
+      mapWindow.scrollLeft = node.offsetLeft - mapWindow.clientWidth / 2;
+    }
+  }
 
   function setView(view, { focus = false, updateHash = false } = {}) {
     for (const tab of tabs) {
@@ -66,6 +76,7 @@ function init(data) {
       if (selected && focus) tab.focus();
     }
     for (const [name, panel] of Object.entries(panels)) panel.hidden = name !== view;
+    if (view === 'map') revealNode();
     if (updateHash && location.hash !== '#' + view) history.pushState(null, '', '#' + view);
   }
 
@@ -100,12 +111,18 @@ function init(data) {
 
   function selectEntry(entry) {
     mapPicker.value = entry.id;
+    for (const [id, node] of mapNodes) node.setAttribute('aria-pressed', String(id === entry.id));
+    for (const { owner, target, line } of mapEdges) {
+      line.classList.toggle('active', owner === entry.id || target === entry.id);
+    }
+    revealNode();
     document.querySelector('#map-detail-type').textContent = entry.type;
     mapTitle.textContent = entry.title;
+    document.querySelector('#map-detail-summary').textContent = entry.summary;
     document.querySelector('#map-detail-description').textContent = entry.detail;
     const facts = document.querySelector('#map-detail-facts');
     facts.replaceChildren();
-    for (const [label, value] of [['Maturity', entry.maturity], ['Availability', entry.availability]]) {
+    for (const [label, value] of [['Map region', entry.map.region], ['Maturity', entry.maturity], ['Availability', entry.availability]]) {
       facts.append(make('dt', '', label), make('dd', '', value));
     }
     const destination = document.querySelector('#map-destination');
@@ -183,8 +200,37 @@ function init(data) {
     empty.hidden = visible.length !== 0;
   }
 
-  for (const entry of entries) mapPicker.append(new Option(entry.title, entry.id));
+  const nodeLayer = document.querySelector('#map-nodes');
+  const lineLayer = document.querySelector('#map-lines');
+  for (const entry of entries) {
+    mapPicker.append(new Option(entry.title, entry.id));
+    const node = make('button', 'map-node');
+    node.type = 'button';
+    node.dataset.entryId = entry.id;
+    node.style.left = entry.map.x + '%';
+    node.style.top = entry.map.y + '%';
+    node.append(make('small', '', entry.type), make('span', '', entry.title));
+    node.setAttribute('aria-controls', 'map-detail-title');
+    node.addEventListener('click', () => {
+      selectEntry(entry);
+      mapTitle.focus();
+    });
+    mapNodes.set(entry.id, node);
+    nodeLayer.append(node);
+
+    for (const relation of entry.relations) {
+      const target = byId.get(relation.target);
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', entry.map.x + '%');
+      line.setAttribute('y1', entry.map.y + '%');
+      line.setAttribute('x2', target.map.x + '%');
+      line.setAttribute('y2', target.map.y + '%');
+      lineLayer.append(line);
+      mapEdges.push({ owner: entry.id, target: target.id, line });
+    }
+  }
   mapPicker.addEventListener('change', () => selectEntry(byId.get(mapPicker.value)));
+  document.querySelector('#map-return').addEventListener('click', () => mapNodes.get(mapPicker.value).focus());
 
   document.querySelectorAll('[data-route]').forEach((button) => {
     button.addEventListener('click', () => {
