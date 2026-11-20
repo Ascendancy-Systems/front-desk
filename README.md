@@ -16,7 +16,11 @@ Edit [`data/directory.json`](./data/directory.json). The Clerk, Directory, and M
 
 Record each documented connection once, on its originating entry, with a target, relation kind, and source ID. The map derives the return route from that same record. The research overview’s membership also determines which entries its Clerk route includes.
 
+When an entry gains a public destination, update its availability, destination, and supporting source together.
+
 ## Preview and publish
+
+When adding a file the browser needs, include it in the [Pages staging step](./.github/workflows/pages.yml) and open its published URL after deployment.
 
 Run `npm test` to check the data and navigation structure. Run `python -m http.server 8000` from this directory to preview the site at `http://localhost:8000/`. The runtime uses browser-native modules and has no package dependencies.
 
